@@ -3,17 +3,22 @@ name: Atualizar Goodreads no README
 on:
   schedule:
     - cron: '0 0 * * *' # Executa automaticamente todos os dias à meia-noite (UTC)
-  workflow_dispatch: # Permite que você rode o script manualmente clicando em um botão no GitHub
+  workflow_dispatch: # Permite que você rode o script manualmente
+
+permissions:
+  contents: write
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
     steps:
+      # Atualizado para v4 para resolver o aviso amarelinho
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
+      # Atualizado para v5 para resolver o aviso amarelinho
       - name: Configurar Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           
