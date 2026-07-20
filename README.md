@@ -1,5 +1,5 @@
 <!-- ![garfield](https://github.com/user-attachments/assets/30e61388-086e-4adc-adf1-97fbfec98db7) -->
-**Computer Science:** 54%
+**Computer Science:** 67%
 
 **Interests:** Data Science, Data Analysis, Systems Security, Low-level Programming, PDF Readers, Vim Motions
 <!-- currently-reading-start -->
