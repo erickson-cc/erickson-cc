@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   update-readme:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       # Atualizado para v4 para resolver o aviso amarelinho
       - name: Checkout repository
