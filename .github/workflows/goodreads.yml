@@ -14,7 +14,7 @@ jobs:
     steps:
       # Atualizado para v4 para resolver o aviso amarelinho
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         
       # Atualizado para v5 para resolver o aviso amarelinho
       - name: Configurar Python
