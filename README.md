@@ -2,7 +2,5 @@
 **Computer Science:** 68%
 
 **Interests:** Systems Security, Criptography, Data Analysis, Low-level Programming, Vim Motions
-<!-- currently-reading-start -->
-**Currently Reading:** Learning Kali Linux: Security Testing, Penetration Testing, and Ethical Hacking, Ric Messier
-<!-- currently-reading-end -->
+<!-- **Currently Reading:** Learning Kali Linux: Security Testing, Penetration Testing, and Ethical Hacking, Ric Messier -->
 
