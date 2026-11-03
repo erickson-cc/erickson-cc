@@ -14,7 +14,7 @@ jobs:
     steps:
       # Atualizado para v4 para resolver o aviso amarelinho
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         
       # Atualizado para v5 para resolver o aviso amarelinho
       - name: Configurar Python
@@ -31,4 +31,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add README.md
           # Só faz o commit se houver alguma mudança real no arquivo
-          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: atualiza livro atual do goodreads" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: atualiza livro atual do goodreads" && git pull --rebase && git push)

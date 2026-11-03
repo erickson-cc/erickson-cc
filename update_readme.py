@@ -1,45 +1,41 @@
 import urllib.request
-import xml.etree.ElementTree as ET
 import re
 import sys
 
-# Substitua pelo seu ID numérico do Goodreads
 USER_ID = "100892536"
-RSS_URL = f"https://www.goodreads.com/review/list_rss/{USER_ID}?shelf=currently-reading"
+# Acedemos ao endereço público visível no browser em vez do RSS desativado
+URL = f"https://www.goodreads.com/review/list/{USER_ID}?shelf=currently-reading"
 
 def update_readme():
     try:
-        # Faz a requisição ao RSS do Goodreads
-        req = urllib.request.Request(RSS_URL, headers={'User-Agent': 'Mozilla/5.0'})
+        # User-Agent modificado para simular um browser comum e evitar bloqueios básicos
+        req = urllib.request.Request(URL, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
         response = urllib.request.urlopen(req)
-        xml_data = response.read()
-        root = ET.fromstring(xml_data)
+        html_data = response.read().decode('utf-8')
 
-        # Busca o primeiro item do feed (livro mais recente adicionado à prateleira)
-        item = root.find('./channel/item')
-        if item is None:
-            print("Nenhum livro na prateleira 'Currently Reading'.")
+        # Expressões regulares para localizar a célula do título e do autor na tabela HTML
+        title_match = re.search(r'<td class="field title".*?<a title="([^"]+)"', html_data, re.IGNORECASE | re.DOTALL)
+        author_match = re.search(r'<td class="field author".*?<a.*?>(.*?)</a>', html_data, re.IGNORECASE | re.DOTALL)
+
+        if not title_match or not author_match:
+            print("Nenhum livro encontrado ou falha ao ler a estrutura da página.")
             sys.exit(0)
 
-        title = item.find('title').text
-        author = item.find('author_name').text
-
-        # Formata a string exatamente como você pediu
+        title = title_match.group(1).strip()
+        # Limpa quebras de linha e formatações extra que possam vir no HTML do autor
+        author = author_match.group(1).strip().replace('\n', '').replace(' *', '')
+        
         reading_text = f"**Currently Reading:** {title}, {author}"
 
-        # Lê o README atual
         with open('README.md', 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # Regex para substituir o texto entre as tags
         start_marker = "<!-- currently-reading-start -->"
         end_marker = "<!-- currently-reading-end -->"
         pattern = re.compile(rf"({start_marker}).*?({end_marker})", re.DOTALL)
         
-        # Insere o novo texto formatado
         new_content = pattern.sub(rf"\1\n{reading_text}\n\2", content)
 
-        # Salva o arquivo modificado
         with open('README.md', 'w', encoding='utf-8') as f:
             f.write(new_content)
             
